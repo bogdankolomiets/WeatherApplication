@@ -1,5 +1,6 @@
 package com.example.bogdan.weatherapplication.di.component;
 
+import com.example.bogdan.weatherapplication.di.module.ApiModule;
 import com.example.bogdan.weatherapplication.di.module.ApplicationModule;
 
 import javax.inject.Singleton;
@@ -12,7 +13,7 @@ import dagger.Component;
  * @date 05.07.16
  */
 @Singleton
-@Component(modules = {ApplicationModule.class})
+@Component(modules = {ApplicationModule.class, ApiModule.class})
 public interface ApplicationComponent {
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.bogdan.weatherapplication.di.component.ApplicationComponent;
 import com.example.bogdan.weatherapplication.di.component.DaggerApplicationComponent;
+import com.example.bogdan.weatherapplication.di.module.ApiModule;
 import com.example.bogdan.weatherapplication.di.module.ApplicationModule;
 
 /**
@@ -23,6 +24,7 @@ public class WeatherApplication extends Application {
 
   private void resolveDependency() {
     mApplicationComponent = DaggerApplicationComponent.builder()
+        .apiModule(new ApiModule("mock"))
         .applicationModule(new ApplicationModule(this))
         .build();
   }
