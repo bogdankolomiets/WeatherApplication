@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.bogdan.weatherapplication.R;
 import com.example.bogdan.weatherapplication.WeatherApplication;
@@ -13,8 +14,12 @@ import com.example.bogdan.weatherapplication.di.module.MainViewModule;
 import com.example.bogdan.weatherapplication.model.entity.WeatherData;
 import com.example.bogdan.weatherapplication.presenter.MainPresenter;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
@@ -23,11 +28,14 @@ import javax.inject.Inject;
  * @version 1
  * @date 05.07.16
  */
-public class MainActivity extends AppCompatActivity implements MainView, OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements MainView,
+    OnMapReadyCallback, OnMapLongClickListener{
   private static final int LAYOUT = R.layout.main_layout;
 
   private GoogleMap mGoogleMap;
   private Toolbar mToolbar;
+  private Marker mMarker;
+
   @Inject
   MainPresenter presenter;
 
@@ -60,12 +68,22 @@ public class MainActivity extends AppCompatActivity implements MainView, OnMapRe
 
   @Override
   public void showWeatherData(WeatherData weatherData) {
-
+    Toast.makeText(this, weatherData.toString(), Toast.LENGTH_LONG).show();
   }
 
   @Override
   public void onMapReady(GoogleMap googleMap) {
     mGoogleMap = googleMap;
+    mGoogleMap.setOnMapLongClickListener(this);
+  }
+
+  @Override
+  public void onMapLongClick(LatLng latLng) {
+    if (mMarker != null) {
+      deleteMarker();
+    }
+    presenter.onLocationSelect(latLng.latitude, latLng.longitude);
+    addMarker(latLng);
   }
 
   private void iniToolbar() {
@@ -77,6 +95,16 @@ public class MainActivity extends AppCompatActivity implements MainView, OnMapRe
     SupportMapFragment mapFragment =
         ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map));
     mapFragment.getMapAsync(this);
+  }
+
+  private void addMarker(LatLng position) {
+    mMarker = mGoogleMap.addMarker(new MarkerOptions()
+        .position(position)
+        .title("You current position"));
+  }
+
+  private void deleteMarker() {
+    mMarker.remove();
   }
 
 }

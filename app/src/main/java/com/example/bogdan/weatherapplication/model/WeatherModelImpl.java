@@ -1,5 +1,6 @@
 package com.example.bogdan.weatherapplication.model;
 
+import com.example.bogdan.weatherapplication.Constants;
 import com.example.bogdan.weatherapplication.api.WeatherApi;
 import com.example.bogdan.weatherapplication.model.entity.WeatherData;
 
@@ -34,7 +35,7 @@ public class WeatherModelImpl implements WeatherModel {
   @Override
   public Observable<WeatherData> getWeatherDataByCoord(double latitude, double longitude, String appId) {
     return mApiInterface
-        .getWeatherByCoord(latitude, longitude, appId)
+        .getWeatherByCoord(latitude, longitude, appId, Constants.HTTP.UNITS, Constants.HTTP.LANGUAGE)
         .compose(applySchedulers());
   }
 

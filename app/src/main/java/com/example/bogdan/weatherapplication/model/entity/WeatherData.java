@@ -47,14 +47,14 @@ public class WeatherData {
   @Override
   public String toString() {
     return "[Description = "
-        + getDescription() + ", "
+        + getDescription() + "mm rt.st, "
         + "Temperature = "
-        + getTemperature() + ", "
+        + getTemperature() + " celsium, "
         + "Pressure = "
         + getPressure() + ", "
         + "Humidity = "
-        + getHumidity() + ", "
+        + getHumidity() + "%, "
         + "WindSpeed = "
-        + getWindSpeed() + "]";
+        + getWindSpeed() + "m/s]";
   }
 }

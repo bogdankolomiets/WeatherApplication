@@ -55,7 +55,24 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
   }
 
   @Override
-  public void onLocationSelect() {
+  public void onLocationSelect(double latitude, double longitude) {
+    mModel
+        .getWeatherDataByCoord(latitude, longitude, Constants.HTTP.APPID)
+        .subscribe(new Observer<WeatherData>() {
+          @Override
+          public void onCompleted() {
 
+          }
+
+          @Override
+          public void onError(Throwable e) {
+            e.printStackTrace();
+          }
+
+          @Override
+          public void onNext(WeatherData weatherData) {
+            mView.showWeatherData(weatherData);
+          }
+        });
   }
 }

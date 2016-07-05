@@ -20,5 +20,7 @@ public interface WeatherApi {
   @GET("weather/")
   Observable<WeatherData> getWeatherByCoord(@Query("lat") double latitude,
                                             @Query("lon") double longitude,
-                                            @Query("appid") String appId);
+                                            @Query("appid") String appId,
+                                            @Query("units") String metrics,
+                                            @Query("lang") String language);
 }

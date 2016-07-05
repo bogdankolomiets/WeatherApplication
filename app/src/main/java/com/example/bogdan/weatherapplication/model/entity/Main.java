@@ -6,17 +6,17 @@ package com.example.bogdan.weatherapplication.model.entity;
  * @date 05.07.16
  */
 public class Main {
-  private double temperature;
-  private int pressure;
+  private double temp;
+  private double pressure;
   private int humidity;
 
   public double getTemperature() {
-    return temperature;
+    return temp;
 
   }
 
   public int getPressure() {
-    return pressure;
+    return (int)(pressure * 0.75);
   }
 
   public int getHumidity() {

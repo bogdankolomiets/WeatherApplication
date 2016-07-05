@@ -13,5 +13,5 @@ public interface MainPresenter {
 
   void onCitySelect(String city);
 
-  void onLocationSelect();
+  void onLocationSelect(double latitude, double longitude);
 }
