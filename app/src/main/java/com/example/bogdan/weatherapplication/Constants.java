@@ -1,4 +1,4 @@
-package com.example.bogdan.weatherapplication.di;
+package com.example.bogdan.weatherapplication;
 
 /**
  * @author Bogdan Kolomiets
@@ -8,5 +8,6 @@ package com.example.bogdan.weatherapplication.di;
 public class Constants {
   public static class HTTP {
     public static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
+    public static final String APPID = "d9c4fc71beb9c1607acfb8754daca0e6";
   }
 }

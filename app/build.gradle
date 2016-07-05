@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "com.example.bogdan.weatherapplication"
         minSdkVersion 11
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -52,5 +52,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile 'com.google.android.gms:play-services:9.2.0'
 
 }

@@ -1,7 +1,7 @@
-package com.example.bogdan.weatherapplication.di.model;
+package com.example.bogdan.weatherapplication.model;
 
 import com.example.bogdan.weatherapplication.api.WeatherApi;
-import com.example.bogdan.weatherapplication.di.model.entity.WeatherData;
+import com.example.bogdan.weatherapplication.model.entity.WeatherData;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,9 +25,16 @@ public class WeatherModelImpl implements WeatherModel {
   }
 
   @Override
-  public Observable<WeatherData> getWeatherData(String city, String appId) {
+  public Observable<WeatherData> getWeatherDataByCity(String city, String appId) {
     return mApiInterface
-        .getWeather(city, appId)
+        .getWeatherByCity(city, appId)
+        .compose(applySchedulers());
+  }
+
+  @Override
+  public Observable<WeatherData> getWeatherDataByCoord(double latitude, double longitude, String appId) {
+    return mApiInterface
+        .getWeatherByCoord(latitude, longitude, appId)
         .compose(applySchedulers());
   }
 

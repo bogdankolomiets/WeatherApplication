@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.example.bogdan.weatherapplication.WeatherApplication;
 import com.example.bogdan.weatherapplication.api.WeatherApi;
-import com.example.bogdan.weatherapplication.di.model.WeatherModel;
-import com.example.bogdan.weatherapplication.di.model.WeatherModelImpl;
+import com.example.bogdan.weatherapplication.model.WeatherModel;
+import com.example.bogdan.weatherapplication.model.WeatherModelImpl;
 
 import javax.inject.Singleton;
 

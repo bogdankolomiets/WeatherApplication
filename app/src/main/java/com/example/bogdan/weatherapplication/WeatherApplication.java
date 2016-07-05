@@ -3,7 +3,6 @@ package com.example.bogdan.weatherapplication;
 import  android.app.Application;
 import android.content.Context;
 
-import com.example.bogdan.weatherapplication.di.Constants;
 import com.example.bogdan.weatherapplication.di.component.ApplicationComponent;
 import com.example.bogdan.weatherapplication.di.component.DaggerApplicationComponent;
 import com.example.bogdan.weatherapplication.di.module.ApiModule;
