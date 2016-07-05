@@ -1,8 +1,9 @@
 package com.example.bogdan.weatherapplication;
 
-import android.app.Application;
+import  android.app.Application;
 import android.content.Context;
 
+import com.example.bogdan.weatherapplication.di.Constants;
 import com.example.bogdan.weatherapplication.di.component.ApplicationComponent;
 import com.example.bogdan.weatherapplication.di.component.DaggerApplicationComponent;
 import com.example.bogdan.weatherapplication.di.module.ApiModule;
@@ -24,7 +25,7 @@ public class WeatherApplication extends Application {
 
   private void resolveDependency() {
     mApplicationComponent = DaggerApplicationComponent.builder()
-        .apiModule(new ApiModule("mock"))
+        .apiModule(new ApiModule(Constants.HTTP.BASE_URL))
         .applicationModule(new ApplicationModule(this))
         .build();
   }
