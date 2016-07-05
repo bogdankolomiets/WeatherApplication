@@ -3,11 +3,17 @@ package com.example.bogdan.weatherapplication.di.module;
 import android.content.Context;
 
 import com.example.bogdan.weatherapplication.WeatherApplication;
+import com.example.bogdan.weatherapplication.api.WeatherApi;
+import com.example.bogdan.weatherapplication.di.model.WeatherModel;
+import com.example.bogdan.weatherapplication.di.model.WeatherModelImpl;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * @author Bogdan Kolomiets
@@ -26,5 +32,19 @@ public class ApplicationModule {
   @Provides
   Context provideApplication() {
     return mApplication;
+  }
+
+  @Singleton
+  @Provides
+  Observable.Transformer provideSchedulerTransformer() {
+    return o -> ((Observable) o).subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .unsubscribeOn(Schedulers.io());
+  }
+
+  @Singleton
+  @Provides
+  WeatherModel provideWeatherModel(Observable.Transformer schedulerTransformer, WeatherApi api) {
+    return new WeatherModelImpl(schedulerTransformer, api);
   }
 }

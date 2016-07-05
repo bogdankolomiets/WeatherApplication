@@ -13,6 +13,6 @@ import rx.Observable;
  */
 public interface WeatherModel {
 
-  Observable<WeatherData> getWeatherData();
+  Observable<WeatherData> getWeatherData(String city, String appId);
 
 }
