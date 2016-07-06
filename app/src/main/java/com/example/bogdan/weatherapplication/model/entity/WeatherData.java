@@ -47,7 +47,7 @@ public class WeatherData {
   @Override
   public String toString() {
     return "[Description = "
-        + getDescription() + "mm rt.st, "
+        + getDescription() + " mm rt.st, "
         + "Temperature = "
         + getTemperature() + " celsium, "
         + "Pressure = "

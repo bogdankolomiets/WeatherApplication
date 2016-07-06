@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.bogdan.weatherapplication.CurrentLocationListener;
 import com.example.bogdan.weatherapplication.R;
 import com.example.bogdan.weatherapplication.WeatherApplication;
 import com.example.bogdan.weatherapplication.di.module.MainViewModule;
@@ -29,12 +30,13 @@ import javax.inject.Inject;
  * @date 05.07.16
  */
 public class MainActivity extends AppCompatActivity implements MainView,
-    OnMapReadyCallback, OnMapLongClickListener{
+    OnMapReadyCallback, OnMapLongClickListener, CurrentLocationListener.OnCurrentLocationChanged{
   private static final int LAYOUT = R.layout.main_layout;
 
   private GoogleMap mGoogleMap;
   private Toolbar mToolbar;
   private Marker mMarker;
+  private CurrentLocationListener mCurrentLocationListener;
 
   @Inject
   MainPresenter presenter;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.checkCurrentLocation:
-        presenter.onCurrentLocationClick();
+        createLocationListener();
         return true;
     }
     return super.onOptionsItemSelected(item);
@@ -107,4 +109,15 @@ public class MainActivity extends AppCompatActivity implements MainView,
     mMarker.remove();
   }
 
+  private void createLocationListener() {
+    if (mCurrentLocationListener == null) {
+      mCurrentLocationListener = new CurrentLocationListener(MainActivity.this, this);
+    }
+    mCurrentLocationListener.registerCurrentLocationListener();
+  }
+
+  @Override
+  public void onLocationChanged(double latitude, double longitude) {
+    presenter.onCurrentLocationChanged(latitude, longitude);
+  }
 }

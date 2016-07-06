@@ -29,7 +29,8 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
   }
 
   @Override
-  public void onCurrentLocationClick() {
+  public void onCurrentLocationChanged(double latitude, double longitude) {
+    onLocationSelect(latitude, longitude);
   }
 
   @Override

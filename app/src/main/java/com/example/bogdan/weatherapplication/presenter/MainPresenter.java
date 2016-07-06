@@ -9,7 +9,7 @@ public interface MainPresenter {
 
   void onCreate();
 
-  void onCurrentLocationClick();
+  void onCurrentLocationChanged(double latitude, double longitude);
 
   void onCitySelect(String city);
 
