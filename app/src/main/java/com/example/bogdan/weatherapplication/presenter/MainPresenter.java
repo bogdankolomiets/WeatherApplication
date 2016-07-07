@@ -11,6 +11,8 @@ public interface MainPresenter {
 
   void onCurrentLocationChanged(double latitude, double longitude);
 
+  void onCityFieldCLick();
+
   void onCitySelect(String city);
 
   void onLocationSelect(double latitude, double longitude);

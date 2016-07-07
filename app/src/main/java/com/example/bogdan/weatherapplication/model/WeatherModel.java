@@ -18,4 +18,6 @@ public interface WeatherModel {
                                                 double longitude,
                                                 String appId);
 
+  Observable<String> getCity();
+
 }

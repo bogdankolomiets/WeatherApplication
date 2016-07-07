@@ -9,4 +9,6 @@ import com.example.bogdan.weatherapplication.model.entity.WeatherData;
  */
 public interface MainView {
   void showWeatherData(WeatherData weatherData);
+
+  void showCity(String city);
 }

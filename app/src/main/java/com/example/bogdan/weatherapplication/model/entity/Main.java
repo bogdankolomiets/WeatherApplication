@@ -10,8 +10,8 @@ public class Main {
   private double pressure;
   private int humidity;
 
-  public double getTemperature() {
-    return temp;
+  public int getTemperature() {
+    return (int)temp;
 
   }
 

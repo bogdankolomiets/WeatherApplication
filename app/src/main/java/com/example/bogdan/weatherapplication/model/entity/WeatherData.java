@@ -28,7 +28,7 @@ public class WeatherData {
     return mWeather.get(0).getDescription();
   }
 
-  public double getTemperature() {
+  public int getTemperature() {
     return mMain.getTemperature();
   }
 
@@ -42,6 +42,10 @@ public class WeatherData {
 
   public double getWindSpeed() {
     return mWindSpeed.getSpeed();
+  }
+
+  public String getIconId() {
+    return mWeather.get(0).getIconid();
   }
 
   @Override
