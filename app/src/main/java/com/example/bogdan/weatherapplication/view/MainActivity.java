@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import com.example.bogdan.weatherapplication.CurrentLocationListener;
 import com.example.bogdan.weatherapplication.R;
@@ -92,14 +91,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
   @Override
   public void showWeatherData(WeatherData weatherData) {
     if (mWeatherMarker != null) {
-      mWeatherMarker.setTemperature(weatherData.getTemperature());
-      mWeatherMarker.setPressure(weatherData.getPressure());
-      mWeatherMarker.setHumidity(weatherData.getHumidity());
-      mWeatherMarker.setWindSpeed(weatherData.getWindSpeed());
-      mWeatherMarker.setDescription(weatherData.getDescription());
-      mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(mWeatherMarker.getBitmapWeatherMarker()));
-      mMarker.setVisible(true);
-      mMarker.setAnchor(0.5f, 1);
+      setupWeatherMarker(weatherData);
     }
   }
 
@@ -121,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
       deleteMarker();
     }
     presenter.onLocationSelect(latLng.latitude, latLng.longitude);
-    addMarker(latLng);
+    setupMarkerPosition(latLng);
   }
 
   @Override
@@ -129,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     if (mMarker != null) {
       deleteMarker();
     }
-    addMarker(new LatLng(latitude, longitude));
+    setupMarkerPosition(new LatLng(latitude, longitude));
     presenter.onCurrentLocationChanged(latitude, longitude);
   }
 
@@ -171,8 +163,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     mapFragment.getMapAsync(this);
   }
 
-  private void addMarker(LatLng position) {
-    mWeatherMarker = new WeatherMarker(this);
+  private void setupMarkerPosition(LatLng position) {
     mMarker = mGoogleMap.addMarker(new MarkerOptions()
         .position(position)
         .visible(false));
@@ -181,6 +172,18 @@ public class MainActivity extends AppCompatActivity implements MainView,
   private void deleteMarker() {
     mWeatherMarker = null;
     mMarker.remove();
+  }
+
+  private void setupWeatherMarker(WeatherData weatherData) {
+    mWeatherMarker = new WeatherMarker(this);
+    mWeatherMarker.setTemperature(weatherData.getTemperature());
+    mWeatherMarker.setPressure(weatherData.getPressure());
+    mWeatherMarker.setHumidity(weatherData.getHumidity());
+    mWeatherMarker.setWindSpeed(weatherData.getWindSpeed());
+    mWeatherMarker.setDescription(weatherData.getDescription());
+    mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(mWeatherMarker.getBitmapWeatherMarker()));
+    mMarker.setVisible(true);
+    mMarker.setAnchor(0.5f, 1);
   }
 
   private void createLocationListener() {
