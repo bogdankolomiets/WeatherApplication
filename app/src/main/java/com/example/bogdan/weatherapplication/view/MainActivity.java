@@ -126,6 +126,10 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
   @Override
   public void onLocationChanged(double latitude, double longitude) {
+    if (mMarker != null) {
+      deleteMarker();
+    }
+    addMarker(new LatLng(latitude, longitude));
     presenter.onCurrentLocationChanged(latitude, longitude);
   }
 
@@ -143,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
   public void afterTextChanged(Editable editable) {
 
   }
-
 
   private void iniToolbar() {
     mToolbar = (Toolbar) findViewById(R.id.toolbar);
