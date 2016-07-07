@@ -18,6 +18,8 @@ import com.example.bogdan.weatherapplication.WeatherApplication;
 import com.example.bogdan.weatherapplication.di.module.MainViewModule;
 import com.example.bogdan.weatherapplication.model.entity.WeatherData;
 import com.example.bogdan.weatherapplication.presenter.MainPresenter;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -112,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
     if (mMarker != null) {
       deleteMarker();
     }
-    presenter.onLocationSelect(latLng.latitude, latLng.longitude);
     setupMarkerPosition(latLng);
+    presenter.onLocationSelect(latLng.latitude, latLng.longitude);
   }
 
   @Override
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
     if (mMarker != null) {
       deleteMarker();
     }
+    zoomCamera(new LatLng(latitude, longitude));
     setupMarkerPosition(new LatLng(latitude, longitude));
     presenter.onCurrentLocationChanged(latitude, longitude);
   }
@@ -164,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
   }
 
   private void setupMarkerPosition(LatLng position) {
+    mWeatherMarker = new WeatherMarker(this);
     mMarker = mGoogleMap.addMarker(new MarkerOptions()
         .position(position)
         .visible(false));
@@ -175,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
   }
 
   private void setupWeatherMarker(WeatherData weatherData) {
-    mWeatherMarker = new WeatherMarker(this);
     mWeatherMarker.setTemperature(weatherData.getTemperature());
     mWeatherMarker.setPressure(weatherData.getPressure());
     mWeatherMarker.setHumidity(weatherData.getHumidity());
@@ -184,6 +187,12 @@ public class MainActivity extends AppCompatActivity implements MainView,
     mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(mWeatherMarker.getBitmapWeatherMarker()));
     mMarker.setVisible(true);
     mMarker.setAnchor(0.5f, 1);
+  }
+
+  private void zoomCamera(LatLng position) {
+    CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(position, 15);
+
+    mGoogleMap.animateCamera(zoom);
   }
 
   private void createLocationListener() {
