@@ -14,6 +14,7 @@ public class WeatherData {
   @SerializedName("coord")
   @Expose
   private Coordinates mCoord;
+
   @SerializedName("weather")
   @Expose
   private List<Weather> mWeather;
