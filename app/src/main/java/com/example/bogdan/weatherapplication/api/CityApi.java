@@ -37,11 +37,15 @@ public class CityApi {
   }
 
   private List<String> getCities() {
-    List<String> cityList = new ArrayList<>();
+    List<String> cityList;
     try {
-      JSONObject obj = new JSONObject(loadJson("city_list.json"));
-      cityList.add(obj.getString("name"));
+      JSONArray obj = new JSONArray(loadJson("city_list.json"));
+      cityList = new ArrayList<>(obj.length());
 
+      for (int i = 0; i < obj.length(); i++) {
+        JSONObject name = obj.getJSONObject(i);
+        cityList.add(name.getString("name"));
+      }
     } catch (JSONException e) {
       e.printStackTrace();
       return null;

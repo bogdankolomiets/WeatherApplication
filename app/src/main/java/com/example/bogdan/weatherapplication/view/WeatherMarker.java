@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +26,6 @@ import butterknife.ButterKnife;
  * @date 07.07.16
  */
 public class WeatherMarker extends LinearLayout {
-
   @BindView(R.id.markerTemperature)
   TextView temperature;
 
@@ -46,6 +48,11 @@ public class WeatherMarker extends LinearLayout {
     super(context);
     initView();
     ButterKnife.bind(this);
+  }
+
+  @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
   }
 
   public Bitmap getBitmapWeatherMarker() {
