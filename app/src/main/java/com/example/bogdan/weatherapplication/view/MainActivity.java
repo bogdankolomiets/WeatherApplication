@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements MainView,
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.checkCurrentLocation:
-        createLocationListener();
         return true;
     }
     return super.onOptionsItemSelected(item);
