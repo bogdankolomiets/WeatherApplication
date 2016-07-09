@@ -2,6 +2,7 @@ package com.example.bogdan.weatherapplication.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -35,6 +36,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Bogdan Kolomiets
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
   @BindView(R.id.searchField)
   AutoCompleteTextView mAutoCompleteTextView;
+
+  @BindView(R.id.fabCurrentLocation)
+  FloatingActionButton fabCurrentLocation;
 
   @Inject
   MainPresenter presenter;
@@ -195,7 +200,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
     mGoogleMap.animateCamera(zoom);
   }
 
-  private void createLocationListener() {
+  @OnClick(R.id.fabCurrentLocation)
+  public void createLocationListener() {
     if (mCurrentLocationListener == null) {
       mCurrentLocationListener = new CurrentLocationListener(MainActivity.this, this);
     }
