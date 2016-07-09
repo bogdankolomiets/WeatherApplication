@@ -11,7 +11,9 @@ import java.util.List;
  * @date 05.07.16
  */
 public class WeatherData {
-
+  @SerializedName("coord")
+  @Expose
+  private Coordinates mCoord;
   @SerializedName("weather")
   @Expose
   private List<Weather> mWeather;
@@ -23,6 +25,14 @@ public class WeatherData {
   @SerializedName("wind")
   @Expose
   private Wind mWindSpeed;
+
+  public double getLatitude() {
+    return mCoord.getLat();
+  }
+
+  public double getLongitude() {
+    return mCoord.getLon();
+  }
 
   public String getDescription() {
     return mWeather.get(0).getDescription();
@@ -42,10 +52,6 @@ public class WeatherData {
 
   public double getWindSpeed() {
     return mWindSpeed.getSpeed();
-  }
-
-  public String getIconId() {
-    return mWeather.get(0).getIconid();
   }
 
   @Override

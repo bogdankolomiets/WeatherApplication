@@ -3,7 +3,6 @@ package com.example.bogdan.weatherapplication.di.module;
 import android.content.Context;
 
 import com.example.bogdan.weatherapplication.WeatherApplication;
-import com.example.bogdan.weatherapplication.api.CityApi;
 import com.example.bogdan.weatherapplication.api.WeatherApi;
 import com.example.bogdan.weatherapplication.model.WeatherModel;
 import com.example.bogdan.weatherapplication.model.WeatherModelImpl;
@@ -46,8 +45,7 @@ public class ApplicationModule {
   @Singleton
   @Provides
   WeatherModel provideWeatherModel(Observable.Transformer schedulerTransformer,
-                                   WeatherApi api,
-                                   CityApi cityApi) {
-    return new WeatherModelImpl(schedulerTransformer, api, cityApi);
+                                   WeatherApi api) {
+    return new WeatherModelImpl(schedulerTransformer, api);
   }
 }

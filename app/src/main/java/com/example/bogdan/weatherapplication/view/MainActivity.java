@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import com.example.bogdan.weatherapplication.CurrentLocationListener;
 import com.example.bogdan.weatherapplication.R;
@@ -46,8 +47,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements MainView,
     OnMapReadyCallback,
     OnMapLongClickListener,
-    CurrentLocationListener.OnCurrentLocationChanged,
-    TextWatcher{
+    CurrentLocationListener.OnCurrentLocationChanged {
   private static final int LAYOUT = R.layout.main_layout;
 
   private GoogleMap mGoogleMap;
@@ -55,11 +55,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
   private WeatherMarker mWeatherMarker;
   private Marker mMarker;
   private CurrentLocationListener mCurrentLocationListener;
-  private ArrayAdapter mAdapter;
-  private ArrayList<String> mList;
 
   @BindView(R.id.searchField)
-  AutoCompleteTextView mAutoCompleteTextView;
+  EditText cityField;
 
   @BindView(R.id.fabCurrentLocation)
   FloatingActionButton fabCurrentLocation;
@@ -89,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements MainView,
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.checkCurrentLocation:
+        presenter.onCitySelect(getCityName());
         return true;
     }
     return super.onOptionsItemSelected(item);
@@ -96,15 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
   @Override
   public void showWeatherData(WeatherData weatherData) {
-    if (mWeatherMarker != null) {
-      setupWeatherMarker(weatherData);
-    }
-  }
-
-  @Override
-  public void showCity(String city) {
-    mAdapter.add(city);
-    mAdapter.notifyDataSetChanged();
+    setupMarkerPosition(new LatLng(weatherData.getLatitude(), weatherData.getLongitude()));
+    setupWeatherMarker(weatherData);
   }
 
   @Override
@@ -115,53 +107,18 @@ public class MainActivity extends AppCompatActivity implements MainView,
 
   @Override
   public void onMapLongClick(LatLng latLng) {
-    if (mMarker != null) {
-      deleteMarker();
-    }
-    setupMarkerPosition(latLng);
     presenter.onLocationSelect(latLng.latitude, latLng.longitude);
   }
 
   @Override
   public void onLocationChanged(double latitude, double longitude) {
-    if (mMarker != null) {
-      deleteMarker();
-    }
     zoomCamera(new LatLng(latitude, longitude));
-    setupMarkerPosition(new LatLng(latitude, longitude));
     presenter.onCurrentLocationChanged(latitude, longitude);
-  }
-
-  @Override
-  public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-  }
-
-  @Override
-  public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-  }
-
-  @Override
-  public void afterTextChanged(Editable editable) {
-
   }
 
   private void iniToolbar() {
     mToolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(mToolbar);
-
-    mList = new ArrayList<>();
-    mAutoCompleteTextView.addTextChangedListener(this);
-    mAdapter = new ArrayAdapter(this,
-        android.R.layout.simple_dropdown_item_1line);
-    mAutoCompleteTextView.setAdapter(mAdapter);
-    mAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        presenter.onCityFieldCLick();
-      }
-    });
   }
 
   private void initMap() {
@@ -171,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements MainView,
   }
 
   private void setupMarkerPosition(LatLng position) {
+    if (mMarker != null) {
+      deleteMarker();
+    }
     mWeatherMarker = new WeatherMarker(this);
     mMarker = mGoogleMap.addMarker(new MarkerOptions()
         .position(position)
@@ -197,6 +157,15 @@ public class MainActivity extends AppCompatActivity implements MainView,
     CameraUpdate zoom = CameraUpdateFactory.newLatLngZoom(position, 15);
 
     mGoogleMap.animateCamera(zoom);
+  }
+
+  private String getCityName() {
+    String result = cityField.getText().toString();
+    if (!result.equals(null) || !result.equals("")) {
+      return result;
+    }
+
+    return null;
   }
 
   @OnClick(R.id.fabCurrentLocation)

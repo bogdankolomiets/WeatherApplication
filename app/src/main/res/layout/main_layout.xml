@@ -13,11 +13,13 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary">
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/searchField"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Write city"/>
+                android:textColor="#fff"
+                android:hint="@string/write_city_text"
+                android:textColorHint="#bcbcbc"/>
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>

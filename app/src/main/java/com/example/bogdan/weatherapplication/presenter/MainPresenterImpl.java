@@ -34,29 +34,6 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
   }
 
   @Override
-  public void onCityFieldCLick() {
-    mModel.getCity()
-        .subscribe(new Observer<String>() {
-          @Override
-          public void onCompleted() {
-
-          }
-
-          @Override
-          public void onError(Throwable e) {
-
-          }
-
-          @Override
-          public void onNext(String city) {
-            if (city != null) {
-              mView.showCity(city);
-            }
-          }
-        });
-  }
-
-  @Override
   public void onCitySelect(String city) {
     mModel
         .getWeatherDataByCity(city, Constants.HTTP.APPID)
